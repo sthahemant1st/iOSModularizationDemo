@@ -8,29 +8,17 @@
 import Foundation
 
 class URLSessionAPIClient: APIClient {
-    
-    // Perform a request and return a custom APIResponse object
-    func request(
-        baseURL: URL,
-        path: String,
-        method: HTTPMethod,
-        body: Data? = nil,
-        headers: [String: String]? = nil,
-        queryParameters: [String: String]? = nil,
-        contentType: ContentType
-    ) async throws -> APIResponse {
-        
+    func request(endpoint: APIEndpoint) async throws -> APIResponse {
         let (data, response) = try await performRequest(
-            baseURL: baseURL,
-            path: path,
-            method: method,
-            body: body,
-            headers: headers,
-            queryParameters: queryParameters,
-            contentType: contentType
+            baseURL: endpoint.baseURL,
+            path: endpoint.path,
+            method: endpoint.method,
+            body: endpoint.body,
+            headers: endpoint.headers,
+            queryParameters: endpoint.queryParameters,
+            contentType: endpoint.contentType
         )
         
-        // Ensure the response is an HTTPURLResponse
         guard let httpResponse = response as? HTTPURLResponse else {
             throw APIError.invalidResponse
         }

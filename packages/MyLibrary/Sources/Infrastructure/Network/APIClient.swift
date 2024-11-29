@@ -8,13 +8,5 @@
 import Foundation
 
 protocol APIClient {
-    func request(
-        baseURL: URL,
-        path: String,
-        method: HTTPMethod,
-        body: Data?,
-        headers: [String: String]?,
-        queryParameters: [String: String]?,
-        contentType: ContentType
-    ) async throws -> APIResponse
+    func request(endpoint: APIEndpoint) async throws -> APIResponse
 }
