@@ -1,6 +1,7 @@
 import UIKit
 
 public extension UIImage {
+    @MainActor
     func resizeWithPercent(percentage: CGFloat) -> UIImage? {
         let imageView = UIImageView(frame: CGRect(origin: .zero, size: CGSize(width: size.width * percentage, height: size.height * percentage)))
         imageView.contentMode = .scaleAspectFit
@@ -12,6 +13,7 @@ public extension UIImage {
         UIGraphicsEndImageContext()
         return result
     }
+    @MainActor
     func resizeWithWidth(width: CGFloat) -> UIImage? {
         let imageView = UIImageView(frame: CGRect(origin: .zero, size: CGSize(width: width, height: CGFloat(ceil(width/size.width * size.height)))))
         imageView.contentMode = .scaleAspectFit

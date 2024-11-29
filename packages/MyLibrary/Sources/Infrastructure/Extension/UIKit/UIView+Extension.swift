@@ -1,9 +1,6 @@
 import UIKit
 
 public extension UIView {
-    func addSubviews(_ views: UIView...) {
-        views.forEach(addSubview(_:))
-    }
     func roundCorners(radius: CGFloat? = nil) {
         self.layer.cornerRadius = radius ?? self.layer.frame.size.height/2
         self.clipsToBounds = true
@@ -17,7 +14,7 @@ public extension UIView {
         layer.mask = mask
     }
     func setBorder(borderWidth: CGFloat = 1.0,
-                   borderColor: UIColor = .borderDefault,
+                   borderColor: UIColor,
                    shouldCorner: Bool = true,
                    cornerRadius: CGFloat? = 12) {
         self.layer.borderWidth = borderWidth
@@ -194,7 +191,7 @@ public extension UIView {
     
     // src : https://medium.com/@sdrzn/adding-gesture-recognizers-with-closures-instead-of-selectors-9fb3e09a8f0b
     fileprivate struct AssociatedObjectKeys {
-        static var tapGestureRecognizer = "MediaViewerAssociatedObjectKey_mediaViewer"
+        static let tapGestureRecognizer = "MediaViewerAssociatedObjectKey_mediaViewer"
     }
     
     fileprivate typealias Action = (() -> Void)?

@@ -7,14 +7,13 @@ let package = Package(
     name: "MyLibrary",
     platforms: [.iOS(.v15)],
     products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "Infrastructure",
             targets: ["Network", "Log", "Extension", "Design", "Coordinator"]
         ),
         .library(
             name: "Core",
-            targets: ["Model", "Repository"]
+            targets: ["Model", "Repository", "UseCase"]
         ),
         .library(
             name: "Login",
@@ -25,6 +24,7 @@ let package = Package(
         // MARK: Feature
         .target(
             name: "Login",
+            dependencies: ["UseCase", "Coordinator", "Design", "Extension"],
             path: "Sources/Feature/Login"
         ),
         // MARK: Core
@@ -34,8 +34,13 @@ let package = Package(
         ),
         .target(
             name: "Repository",
+            dependencies: ["Model"],
             path: "Sources/Core/Repository"
-            // dependes on model
+        ),
+        .target(
+            name: "UseCase",
+            dependencies: ["Repository"],
+            path: "Sources/Core/UseCase"
         ),
         // MARK: Infrastructure
         .target(
