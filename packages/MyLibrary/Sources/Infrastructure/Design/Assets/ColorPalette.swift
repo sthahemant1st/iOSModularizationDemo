@@ -8,8 +8,6 @@
 import SwiftUI
 
 private struct ColorPalette: View {
-
-    
     var body: some View {
         ScrollView {
             VStack {
