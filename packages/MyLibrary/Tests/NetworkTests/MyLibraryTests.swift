@@ -35,9 +35,8 @@ struct URLSessionAPIClientTests {
             queryItems: nil,
             contentType: contentTypeCheck.type
         )
-        do {
-            _ = try await sut.request(endpoint: testEndpoint)
-        } catch {}
+        mockSuccess()
+        _ = try await sut.request(endpoint: testEndpoint)
         #expect(mockURLSession.capturedRequest?.value(forHTTPHeaderField: "Content-Type")  == contentTypeCheck.value)
     }
     
@@ -61,6 +60,95 @@ struct URLSessionAPIClientTests {
         }
     }
     
+    @Test(
+        "check if httpMethod is set correctly",
+        arguments: [
+            HTTPMethod.get,
+            HTTPMethod.post,
+            HTTPMethod.put,
+            HTTPMethod.delete
+        ]
+    )
+    func checkHTTPMethod(httpMethod: HTTPMethod) async throws {
+        let testEndpoint = APIEndpoint(
+            scheme: .https,
+            host: "test.com",
+            path: "/test",
+            method: httpMethod,
+            body: nil,
+            headers: nil,
+            queryItems: nil,
+            contentType: .json
+        )
+        mockSuccess()
+        _ = try await sut.request(endpoint: testEndpoint)
+        #expect(mockURLSession.capturedRequest?.httpMethod == httpMethod.rawValue)
+    }
+    @Test(
+        "check if http scheme is set correctly",
+        arguments: [
+            HttpScheme.http,
+            HttpScheme.https
+        ]
+    )
+    func checkHttpScheme(scheme: HttpScheme) async throws {
+        let testEndpoint = APIEndpoint(
+            scheme: scheme,
+            host: "test.com",
+            path: "/test",
+            method: .get,
+            body: nil,
+            headers: nil,
+            queryItems: nil,
+            contentType: .json
+        )
+        mockSuccess()
+        _ = try await sut.request(endpoint: testEndpoint)
+        #expect(mockURLSession.capturedRequest?.url?.scheme == scheme.rawValue)
+    }
+    
+    @Test(
+        "check if query items are set correctly",
+        arguments: [
+            [
+                URLQueryItem(name: "key", value: "value"),
+                URLQueryItem(name: "key4", value: "value4")
+            ],
+            [],
+            [
+                URLQueryItem(name: "key5", value: "value5"),
+                URLQueryItem(name: "key4", value: "value4"),
+            ],
+            [
+                URLQueryItem(name: "key5", value: "value5"),
+                URLQueryItem(name: "key4", value: nil),
+            ]
+        ]
+    )
+    func chekcQueryItems(queryItems: [URLQueryItem]) async throws {
+        let testEndpoint = APIEndpoint(
+            scheme: .http,
+            host: "test.com",
+            path: "/test",
+            method: .get,
+            body: nil,
+            headers: nil,
+            queryItems: queryItems,
+            contentType: .json
+        )
+        mockSuccess()
+        _ = try await sut.request(endpoint: testEndpoint)
+        let capturedQuery = mockURLSession.capturedRequest?.url?.query
+        let expectedQuery = queryItems
+            .map { "\($0.name)\($0.value == nil ? "" : "=\($0.value!)")"}
+            .joined(separator: "&")
+        #expect( capturedQuery == expectedQuery)
+    }
+    
+    func mockSuccess() {
+        mockURLSession.response = HTTPURLResponse()
+        mockURLSession.data = "".data(using: .utf8)
+    }
 }
 
 class MockURLSession: URLSessionProtocol {
