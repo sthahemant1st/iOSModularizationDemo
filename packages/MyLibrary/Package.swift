@@ -5,7 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "MyLibrary",
-    platforms: [.iOS(.v15)],
+    platforms: [.iOS(.v15), .macOS(.v12)],
     products: [
         .library(
             name: "Infrastructure",
@@ -18,7 +18,11 @@ let package = Package(
         .library(
             name: "Login",
             targets: ["Login"]
-        )
+        ),
+        .library(
+            name: "Network",
+            targets: ["Network"]
+        ),
     ],
     targets: [
         // MARK: Feature
@@ -63,9 +67,10 @@ let package = Package(
             name: "Coordinator",
             path: "Sources/Infrastructure/Coordinator"
         ),
+        // MARK: - Test
         .testTarget(
-            name: "MyLibraryTests",
-            dependencies: ["Model"]
+            name: "NetworkTests",
+            dependencies: ["Network"]
         ),
     ]
 )

@@ -8,16 +8,19 @@
 import Foundation
 
 class URLSessionAPIClient: APIClient {
+    
+    private var session: URLSessionProtocol
+    private let jsonEncoder: JSONEncoder
+    init(
+        session: URLSessionProtocol = URLSession.shared,
+        jsonEncoder: JSONEncoder = .init()
+    ) {
+        self.session = session
+        self.jsonEncoder = jsonEncoder
+    }
+    
     func request(endpoint: APIEndpoint) async throws -> APIResponse {
-        let (data, response) = try await performRequest(
-            baseURL: endpoint.baseURL,
-            path: endpoint.path,
-            method: endpoint.method,
-            body: endpoint.body,
-            headers: endpoint.headers,
-            queryParameters: endpoint.queryParameters,
-            contentType: endpoint.contentType
-        )
+        let (data, response) = try await performRequest(endpoint: endpoint)
         
         guard let httpResponse = response as? HTTPURLResponse else {
             throw APIError.invalidResponse
@@ -27,56 +30,45 @@ class URLSessionAPIClient: APIClient {
     }
     
     // Helper function to perform the actual network request
-    private func performRequest(
-        baseURL: URL,
-        path: String,
-        method: HTTPMethod,
-        body: Data?,
-        headers: [String: String]?,
-        queryParameters: [String: String]?,
-        contentType: ContentType
-    ) async throws -> (Data, URLResponse) {
-        
-        let fullURL = baseURL.appendingPathComponent(path)
-        var urlRequest = URLRequest(url: fullURL)
-        urlRequest.httpMethod = method.rawValue
+    private func performRequest(endpoint: APIEndpoint) async throws -> (Data, URLResponse) {
+        var component = URLComponents()
+        component.scheme = endpoint.scheme.rawValue
+        component.host = endpoint.host
+        component.path = endpoint.path
+        if let queryItems  = endpoint.queryItems {
+            component.queryItems = queryItems
+        }
+
+        var urlRequest = URLRequest(url: component.url!)
+        urlRequest.httpMethod = endpoint.method.rawValue
         
         // Set headers
-        urlRequest.allHTTPHeaderFields = headers
+        urlRequest.allHTTPHeaderFields = endpoint.headers
         
-        // Add query parameters if any
-        if let queryParameters = queryParameters {
-            var components = URLComponents(url: fullURL, resolvingAgainstBaseURL: false)!
-            components.queryItems = queryParameters.map { key, value in
-                URLQueryItem(name: key, value: value)
-            }
-            urlRequest.url = components.url
-        }
-        
-        // Set the correct Content-Type and encode the body if needed
-        switch contentType {
+        switch endpoint.contentType {
         case .json:
             urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            if let body = body {
-                urlRequest.httpBody = body
-            }
         case .formURLEncoded:
             urlRequest.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-            if let body = body {
-                urlRequest.httpBody = body
-            }
         case .multipart:
-            // Handle multipart if needed
-            break
+            urlRequest.setValue("multipart/form-data", forHTTPHeaderField: "Content-Type")
+            throw Error.multipartContentTypeNotSupported
         case .plainText:
             urlRequest.setValue("text/plain", forHTTPHeaderField: "Content-Type")
-            if let body = body {
-                urlRequest.httpBody = body
-            }
+        }
+        
+        if let body = endpoint.body {
+            urlRequest.httpBody = try jsonEncoder.encode(body)
         }
         
         // Perform the network request
-        let (data, response) = try await URLSession.shared.data(for: urlRequest)
+        let (data, response) = try await session.data(for: urlRequest)
         return (data, response)
     }
+    
+    enum Error: Swift.Error {
+        case multipartContentTypeNotSupported
+    }
 }
+
+

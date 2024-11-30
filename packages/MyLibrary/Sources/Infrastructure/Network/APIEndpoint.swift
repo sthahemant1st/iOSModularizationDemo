@@ -7,12 +7,18 @@
 
 import Foundation
 
+enum HttpScheme: String {
+    case https
+    case http
+}
+
 struct APIEndpoint {
-    let baseURL: URL
+    var scheme: HttpScheme
+    var host: String
     let path: String
-    let method: HTTPMethod
-    let body: Data?
-    let headers: [String: String]?
-    let queryParameters: [String: String]?
-    let contentType: ContentType
+    var method: HTTPMethod
+    var body: (Encodable & Sendable)?
+    var headers: [String: String]?
+    var queryItems: [URLQueryItem]?
+    var contentType: ContentType
 }
