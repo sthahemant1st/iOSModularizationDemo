@@ -9,7 +9,7 @@ let package = Package(
     products: [
         .library(
             name: "Infrastructure",
-            targets: ["Network", "Log", "Extension", "Design", "Coordinator"]
+            targets: ["Network", "Extension", "Design", "Coordinator"]
         ),
         .library(
             name: "Core",
@@ -22,6 +22,10 @@ let package = Package(
         .library(
             name: "Network",
             targets: ["Network"]
+        ),
+        .library(
+            name: "Design",
+            targets: ["Design"]
         ),
     ],
     targets: [
@@ -50,10 +54,6 @@ let package = Package(
         .target(
             name: "Network",
             path: "Sources/Infrastructure/Network"
-        ),
-        .target(
-            name: "Log",
-            path: "Sources/Infrastructure/Log"
         ),
         .target(
             name: "Extension",

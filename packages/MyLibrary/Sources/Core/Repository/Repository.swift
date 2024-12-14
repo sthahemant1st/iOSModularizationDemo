@@ -6,3 +6,8 @@
 //
 
 import Foundation
+import Model
+
+struct ProfileRepository {
+    let porofile: Profile
+}
