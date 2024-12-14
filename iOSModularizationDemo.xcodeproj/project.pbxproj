@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		41342F4C2D0D403A00F810E4 /* Infrastructure in Frameworks */ = {isa = PBXBuildFile; productRef = 41342F4B2D0D403A00F810E4 /* Infrastructure */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		DD23CDD02CF5C25600995C9B /* iOSModularizationDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSModularizationDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD465F522CF5C9CF00F9B66B /* MyLibrary */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MyLibrary; path = packages/MyLibrary; sourceTree = "<group>"; };
@@ -37,6 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				41342F4C2D0D403A00F810E4 /* Infrastructure in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,6 +93,8 @@
 			);
 			name = iOSModularizationDemo;
 			packageProductDependencies = (
+				41342F3A2D0D3D0500F810E4 /* CoordinatorKit */,
+				41342F4B2D0D403A00F810E4 /* Infrastructure */,
 			);
 			productName = iOSModularizationDemo;
 			productReference = DD23CDD02CF5C25600995C9B /* iOSModularizationDemo.app */;
@@ -343,6 +350,17 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		41342F3A2D0D3D0500F810E4 /* CoordinatorKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CoordinatorKit;
+		};
+		41342F4B2D0D403A00F810E4 /* Infrastructure */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Infrastructure;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = DD23CDC82CF5C25600995C9B /* Project object */;
 }

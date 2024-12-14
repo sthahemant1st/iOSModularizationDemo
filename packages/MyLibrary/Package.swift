@@ -50,6 +50,11 @@ let package = Package(
             dependencies: ["Repository"],
             path: "Sources/Core/UseCase"
         ),
+        .target(
+            name: "PersistanceManager",
+            dependencies: ["Model", "UserDefaultsService"],
+            path: "Sources/Core/PersistanceManager"
+        ),
         // MARK: Infrastructure
         .target(
             name: "Network",
@@ -66,6 +71,10 @@ let package = Package(
         .target(
             name: "Coordinator",
             path: "Sources/Infrastructure/Coordinator"
+        ),
+        .target(
+            name: "UserDefaultsService",
+            path: "Sources/Infrastructure/UserDefaultsService"
         ),
         // MARK: - Test
         .testTarget(
