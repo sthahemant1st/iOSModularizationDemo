@@ -9,30 +9,22 @@ let package = Package(
     products: [
         .library(
             name: "Infrastructure",
-            targets: ["Network", "Extension", "Design", "Coordinator"]
+            targets: ["APIClient", "CommonInfrastructure", "UserDefaultsService"]
         ),
         .library(
             name: "Core",
             targets: ["Model", "Repository", "UseCase"]
         ),
         .library(
-            name: "Login",
+            name: "Feature",
             targets: ["Login"]
-        ),
-        .library(
-            name: "Network",
-            targets: ["Network"]
-        ),
-        .library(
-            name: "Design",
-            targets: ["Design"]
         ),
     ],
     targets: [
         // MARK: Feature
         .target(
             name: "Login",
-            dependencies: ["UseCase", "Coordinator", "Design", "Extension"],
+            dependencies: ["UseCase", "CommonInfrastructure"],
             path: "Sources/Feature/Login"
         ),
         // MARK: Core
@@ -42,7 +34,7 @@ let package = Package(
         ),
         .target(
             name: "Repository",
-            dependencies: ["Model"],
+            dependencies: ["Model", "APIClient"],
             path: "Sources/Core/Repository"
         ),
         .target(
@@ -57,29 +49,24 @@ let package = Package(
         ),
         // MARK: Infrastructure
         .target(
-            name: "Network",
-            path: "Sources/Infrastructure/Network"
+            name: "APIClient",
+            path: "Sources/Infrastructure/APIClient"
         ),
         .target(
-            name: "Extension",
-            path: "Sources/Infrastructure/Extension"
-        ),
-        .target(
-            name: "Design",
-            path: "Sources/Infrastructure/Design"
-        ),
-        .target(
-            name: "Coordinator",
-            path: "Sources/Infrastructure/Coordinator"
+            name: "CommonInfrastructure",
+            path: "Sources/Infrastructure/Common"
         ),
         .target(
             name: "UserDefaultsService",
             path: "Sources/Infrastructure/UserDefaultsService"
         ),
+//        .target(
+//            name: "Infrastructure"
+//        ),
         // MARK: - Test
         .testTarget(
-            name: "NetworkTests",
-            dependencies: ["Network"]
+            name: "APIClientTests",
+            dependencies: ["APIClient"]
         ),
     ]
 )

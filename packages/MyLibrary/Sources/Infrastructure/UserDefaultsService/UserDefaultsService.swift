@@ -7,23 +7,22 @@
 
 import Foundation
 
-public class UserDefaultsService: UserDefaultsServiceProtocol {
-    private let defaults = UserDefaults.standard
-    
+public final class UserDefaultsService: UserDefaultsServiceProtocol {
+
     public init() {}
     
     public func save<T: Codable>(value: T, forKey key: String) {
         if let encoded = try? JSONEncoder().encode(value) {
-            defaults.set(encoded, forKey: key)
+            UserDefaults.standard.set(encoded, forKey: key)
         }
     }
 
     public func fetch<T: Codable>(forKey key: String) -> T? {
-        guard let data = defaults.data(forKey: key) else { return nil }
+        guard let data = UserDefaults.standard.data(forKey: key) else { return nil }
         return try? JSONDecoder().decode(T.self, from: data)
     }
 
     public func removeValue(forKey key: String) {
-        defaults.removeObject(forKey: key)
+        UserDefaults.standard.removeObject(forKey: key)
     }
 }

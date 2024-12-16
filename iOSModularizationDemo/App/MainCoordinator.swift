@@ -7,7 +7,8 @@
 
 
 import UIKit
-import Coordinator
+import CommonInfrastructure
+import Login
 
 class MainCoordinator: ParentCoordinator {
     var childCoordinators: [any ChildCoordinator]
@@ -18,9 +19,24 @@ class MainCoordinator: ParentCoordinator {
         self.navigationController = navigationController
         self.childCoordinators = []
     }
+    
     func start() {
-        let viewController = UIViewController()
-        viewController.view.backgroundColor = .cyan
-        navigationController.viewControllers = [viewController]
+        let loginCoordinator = LoginCoordinator(
+            parentCoordinator: self,
+            navigationController: navigationController,
+            delegate: self
+        )
+        childCoordinators.append(loginCoordinator)
+        loginCoordinator.start()
+    }
+}
+
+extension MainCoordinator: LoginCoordinatorDelegate {
+    func navigateToForgotPassword() {
+        
+    }
+    
+    func navigateToRegister() {
+        
     }
 }

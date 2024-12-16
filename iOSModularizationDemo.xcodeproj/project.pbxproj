@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		41342F4C2D0D403A00F810E4 /* Infrastructure in Frameworks */ = {isa = PBXBuildFile; productRef = 41342F4B2D0D403A00F810E4 /* Infrastructure */; };
+		4170DE532D0FE2A000AF6419 /* Core in Frameworks */ = {isa = PBXBuildFile; productRef = 4170DE522D0FE2A000AF6419 /* Core */; };
+		4170DE552D0FE2A000AF6419 /* Feature in Frameworks */ = {isa = PBXBuildFile; productRef = 4170DE542D0FE2A000AF6419 /* Feature */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,7 +43,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4170DE552D0FE2A000AF6419 /* Feature in Frameworks */,
 				41342F4C2D0D403A00F810E4 /* Infrastructure in Frameworks */,
+				4170DE532D0FE2A000AF6419 /* Core in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -93,8 +97,9 @@
 			);
 			name = iOSModularizationDemo;
 			packageProductDependencies = (
-				41342F3A2D0D3D0500F810E4 /* CoordinatorKit */,
 				41342F4B2D0D403A00F810E4 /* Infrastructure */,
+				4170DE522D0FE2A000AF6419 /* Core */,
+				4170DE542D0FE2A000AF6419 /* Feature */,
 			);
 			productName = iOSModularizationDemo;
 			productReference = DD23CDD02CF5C25600995C9B /* iOSModularizationDemo.app */;
@@ -352,13 +357,17 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		41342F3A2D0D3D0500F810E4 /* CoordinatorKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = CoordinatorKit;
-		};
 		41342F4B2D0D403A00F810E4 /* Infrastructure */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Infrastructure;
+		};
+		4170DE522D0FE2A000AF6419 /* Core */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Core;
+		};
+		4170DE542D0FE2A000AF6419 /* Feature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Feature;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
