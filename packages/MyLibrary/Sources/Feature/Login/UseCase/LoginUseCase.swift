@@ -8,7 +8,10 @@
 import Foundation
 
 struct LoginUseCase: LoginUseCaseProtocol {
-    func login(userName: String, password: String) async throws {
+    func login(
+        userName: String,
+        password: String
+    ) async throws {
         if userName.isEmpty {
             throw LoginError.emptyUserName
         }

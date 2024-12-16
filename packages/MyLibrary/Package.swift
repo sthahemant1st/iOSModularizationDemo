@@ -17,7 +17,7 @@ let package = Package(
         ),
         .library(
             name: "Feature",
-            targets: ["Login"]
+            targets: ["Login", "Register"]
         ),
     ],
     targets: [
@@ -26,6 +26,11 @@ let package = Package(
             name: "Login",
             dependencies: ["UseCase", "CommonInfrastructure"],
             path: "Sources/Feature/Login"
+        ),
+        .target(
+            name: "Register",
+            dependencies: ["UseCase", "CommonInfrastructure"],
+            path: "Sources/Feature/Register"
         ),
         // MARK: Core
         .target(

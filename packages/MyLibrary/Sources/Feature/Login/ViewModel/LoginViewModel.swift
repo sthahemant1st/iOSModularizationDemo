@@ -6,23 +6,7 @@
 //
 
 import Foundation
-
-@MainActor
-class BaseViewModel: ObservableObject {
-    @Published var isLoading: Bool = false
-    private(set) var error: Error?
-    @Published var isErrorShown: Bool = false
-    
-    func showError(error: Error) {
-        self.error = error
-        isErrorShown = true
-    }
-    
-    func dismissError() {
-        error = nil
-        isErrorShown = false
-    }
-}
+import CommonInfrastructure
 
 @MainActor
 final class LoginViewModel: BaseViewModel {
