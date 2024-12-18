@@ -13,11 +13,11 @@ let package = Package(
         ),
         .library(
             name: "Core",
-            targets: ["Model", "Repository", "UseCase"]
+            targets: ["Model", "Repository", "UseCase", "PersistanceManager"]
         ),
         .library(
             name: "Feature",
-            targets: ["Login", "Register"]
+            targets: ["Login", "Register", "Dashboard"]
         ),
     ],
     targets: [
@@ -31,6 +31,11 @@ let package = Package(
             name: "Register",
             dependencies: ["UseCase", "CommonInfrastructure"],
             path: "Sources/Feature/Register"
+        ),
+        .target(
+            name: "Dashboard",
+            dependencies: ["UseCase", "CommonInfrastructure"],
+            path: "Sources/Feature/Dashboard"
         ),
         // MARK: Core
         .target(

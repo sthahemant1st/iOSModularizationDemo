@@ -7,6 +7,7 @@
 
 import Foundation
 import CommonInfrastructure
+import UseCase
 
 @MainActor
 final class EnterEmailViewModel: BaseViewModel {

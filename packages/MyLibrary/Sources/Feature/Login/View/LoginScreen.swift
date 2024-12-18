@@ -12,15 +12,18 @@ struct LoginScreen: View {
     @StateObject private var viewModel: LoginViewModel
     private let forgotPasswordTapped: () -> Void
     private let registerTapped: () -> Void
+    private let loginSuccess: () -> Void
     
     init(
         viewModel: LoginViewModel,
         forgotPasswordTapped: @escaping () -> Void,
-        registerTapped: @escaping () -> Void
+        registerTapped: @escaping () -> Void,
+        loginSuccess: @escaping () -> Void
     ) {
         self._viewModel = StateObject(wrappedValue: viewModel)
         self.forgotPasswordTapped = forgotPasswordTapped
         self.registerTapped = registerTapped
+        self.loginSuccess = loginSuccess
     }
     
     var body: some View {
@@ -44,7 +47,7 @@ struct LoginScreen: View {
                 
                 PrimaryButton(
                     label: "Login",
-                    action: viewModel.login
+                    action: loginTapped
                 )
             }
             .frame(maxHeight: .infinity)
@@ -64,6 +67,17 @@ struct LoginScreen: View {
         .navigationBarTitle("Login")
         .navigationBarTitleDisplayMode(.inline)
     }
+    
+    private func loginTapped() {
+        Task {
+            do {
+                try await viewModel.login()
+                loginSuccess()
+            } catch {
+                
+            }
+        }
+    }
 }
 
 #Preview {
@@ -71,7 +85,8 @@ struct LoginScreen: View {
         LoginScreen(
             viewModel: .init(),
             forgotPasswordTapped: {},
-            registerTapped: {}
+            registerTapped: {},
+            loginSuccess: {}
         )
     }
 }

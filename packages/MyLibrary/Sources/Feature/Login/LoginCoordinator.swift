@@ -11,6 +11,7 @@ import SwiftUI
 public protocol LoginCoordinatorDelegate: AnyObject {
     func navigateToForgotPassword()
     func navigateToRegister()
+    func loginSuccess()
 }
 
 public class LoginCoordinator: ChildCoordinator {
@@ -37,11 +38,14 @@ public class LoginCoordinator: ChildCoordinator {
             },
             registerTapped: { [weak self] in
                 self?.delegate?.navigateToRegister()
+            },
+            loginSuccess: { [weak self] in
+                self?.delegate?.loginSuccess()
             }
         )
         
-        navigationController.pushViewController(
-            loginScreen.viewController,
+        navigationController.setViewControllers(
+            [loginScreen.viewController],
             animated: true
         )
     }

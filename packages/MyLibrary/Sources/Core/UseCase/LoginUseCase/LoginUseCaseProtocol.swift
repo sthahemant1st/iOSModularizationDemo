@@ -8,6 +8,6 @@
 
 import Foundation
 
-protocol LoginUseCaseProtocol: Sendable {
+public protocol LoginUseCaseProtocol: Sendable {
     func login(userName: String, password: String) async throws
 }

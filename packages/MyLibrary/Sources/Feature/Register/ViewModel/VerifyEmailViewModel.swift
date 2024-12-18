@@ -8,6 +8,7 @@
 
 import SwiftUI
 import CommonInfrastructure
+import UseCase
 
 @MainActor
 final class VerifyEmailViewModel: BaseViewModel {

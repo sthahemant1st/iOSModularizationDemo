@@ -7,6 +7,7 @@
 
 import Foundation
 import CommonInfrastructure
+import UseCase
 
 @MainActor
 final class LoginViewModel: BaseViewModel {
@@ -20,19 +21,18 @@ final class LoginViewModel: BaseViewModel {
         super.init()
     }
     
-    func login() {
-        Task {
-            isLoading = true
-            defer { isLoading = false }
-            do {
-                try await Task.sleep(seconds: 1)
-                try await loginUseCase.login(
-                    userName: username,
-                    password: password
-                )
-            } catch {
-                showError(error: error)
-            }
+    func login() async throws {
+        isLoading = true
+        defer { isLoading = false }
+        do {
+            try await Task.sleep(seconds: 1)
+            try await loginUseCase.login(
+                userName: username,
+                password: password
+            )
+        } catch {
+            showError(error: error)
+            throw error
         }
     }
 }
@@ -42,4 +42,3 @@ extension Task where Success == Never, Failure == Never {
         try await Task.sleep(nanoseconds: UInt64(seconds * Double(NSEC_PER_SEC)))
     }
 }
-

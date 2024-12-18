@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CommonInfrastructure
+import UseCase
 
 final class RegisterViewModel: BaseViewModel {
     private let useCase: RegisterCreateAccountUseCaseProtocol

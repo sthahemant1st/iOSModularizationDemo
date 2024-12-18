@@ -9,6 +9,7 @@ import UIKit
 import CommonInfrastructure
 import Login
 import Register
+import Dashboard
 
 class MainCoordinator: NSObject, ParentCoordinator {
     var childCoordinators: [any ChildCoordinator]
@@ -34,8 +35,18 @@ class MainCoordinator: NSObject, ParentCoordinator {
 }
 
 extension MainCoordinator: LoginCoordinatorDelegate {
+    func loginSuccess() {
+        let dashboardCoordinator = DashboardCoordinator(
+            parentCoordinator: self,
+            navigationController: navigationController,
+            delegate: self
+        )
+        childCoordinators.append(dashboardCoordinator)
+        dashboardCoordinator.start()
+    }
+    
     func navigateToForgotPassword() {
-        
+        navigationController.showAlert(withMessage: "Not implemented")
     }
     
     func navigateToRegister() {
@@ -45,6 +56,12 @@ extension MainCoordinator: LoginCoordinatorDelegate {
         )
         childCoordinators.append(registerCoordinator)
         registerCoordinator.start()
+    }
+}
+
+extension MainCoordinator: DashboardCoordinatorDelegate {
+    func logout() {
+        start()
     }
 }
 
