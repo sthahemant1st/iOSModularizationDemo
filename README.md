@@ -73,3 +73,5 @@ The application uses SwiftUI for its user interface. Key screens include:
 *   **ItemDetailsScreen:** Displays details for a selected item.
 *   **SettingsScreen:** Displays app settings.
 
+## App Flow Diagram
+![AppFlowDiagram](https://www.mermaidchart.com/raw/66bc0af2-9240-4450-b275-909516b8ebc1?theme=light&version=v0.1&format=svg)
